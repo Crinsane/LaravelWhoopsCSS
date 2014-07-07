@@ -1,0 +1,25 @@
+{
+    "name": "gloudemans/laravel-whoops-css",
+    "description": "Copy the custom Laravel Whoops resources to the vendor folder.",
+    "authors": [
+        {
+            "name": "Rob Gloudemans",
+            "email": "Rob_Gloudemans@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~4",
+        "illuminate/filesystem": "~4",
+        "illuminate/console": "~4"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.9.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Gloudemans\\LaravelWhoopsCSS": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

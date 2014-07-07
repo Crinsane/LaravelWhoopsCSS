@@ -65,7 +65,7 @@ class WhoopsCSSCopyCommand extends Command {
 	 */
 	protected function getWhoopsPath()
 	{
-		return base_path() . '/vendor/filp/whoops/src/Whoops/Resources/css/';
+		return __DIR__ . '/../../vendor/filp/whoops/src/Whoops/Resources/css/';
 	}
 
 	/**

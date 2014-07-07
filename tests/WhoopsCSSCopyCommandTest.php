@@ -10,6 +10,16 @@ class WhoopsCSSCopyCommandTest extends PHPUnit_Framework_TestCase {
 		@unlink(__DIR__ . '/tmp/whoops.base.css');
 	}
 
+	public static function tearDownAfterClass()
+	{
+		@rmdir(__DIR__ . '/tmp');
+	}
+
+	public static function setUpBeforeClass()
+	{
+		@mkdir(__DIR__ . '/tmp');
+	}
+
 	public function test_command_gives_output()
 	{
 		$command = new WhoopsCSSCopyCommand();

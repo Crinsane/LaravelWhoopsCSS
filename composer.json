@@ -13,9 +13,6 @@
         "illuminate/filesystem": "~4",
         "illuminate/console": "~4"
     },
-    "require-dev": {
-        "mockery/mockery": "0.9.1"
-    },
     "autoload": {
         "psr-0": {
             "Gloudemans\\LaravelWhoopsCSS": "src/"

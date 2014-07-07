@@ -2,26 +2,37 @@
 
 use Gloudemans\LaravelWhoopsCSS\WhoopsCSSCopyCommand;
 use Symfony\Component\Console\Tester\CommandTester;
-use Mockery as m;
 
 class WhoopsCSSCopyCommandTest extends PHPUnit_Framework_TestCase {
 
 	public function tearDown()
 	{
-		m::close();
+		@unlink(__DIR__ . '/tmp/whoops.base.css');
 	}
 
 	public function test_command_gives_output()
 	{
-		$file = m::mock('Illuminate\Filesystem\Filesystem');
-		$command = new WhoopsCSSCopyCommand($file);
+		$command = new WhoopsCSSCopyCommand();
 		$tester = new CommandTester($command);
 
-		$tester->execute([]);
+		$tester->execute(['--whoopsPath' => __DIR__ . '/tmp/', '--resourcePath' => __DIR__ . '/stubs/']);
 
 		$this->assertEquals(
 			"Whoops resources copied to vendor directory.\n",
 			$tester->getDisplay()
+		);
+	}
+
+	public function test_command_copies_resources_to_path()
+	{
+		$command = new WhoopsCSSCopyCommand();
+		$tester = new CommandTester($command);
+
+		$tester->execute(['--whoopsPath' => __DIR__ . '/tmp/', '--resourcePath' => __DIR__ . '/stubs/']);
+
+		$this->assertEquals(
+			'This is the stub for the Whoops resources.',
+			file_get_contents(__DIR__ . '/tmp/whoops.base.css')
 		);
 	}
 

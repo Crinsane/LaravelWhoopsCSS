@@ -1,7 +1,7 @@
 <?php namespace Gloudemans\LaravelWhoopsCSS;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Console\Input\InputOption;
 
 class WhoopsCSSCopyCommand extends Command {
 
@@ -22,14 +22,11 @@ class WhoopsCSSCopyCommand extends Command {
 	/**
 	 * Create a new command instance.
 	 *
-	 * @param  Illuminate\Filesystem\Filesystem  $file
 	 * @return void
 	 */
-	public function __construct(Filesystem $file)
+	public function __construct()
 	{
 		parent::__construct();
-
-		$this->file = $file;
 	}
 
 	/**
@@ -43,7 +40,7 @@ class WhoopsCSSCopyCommand extends Command {
 		$whoopsPath = $this->getWhoopsPath();
 		$resourceFilename = $this->getResourceFilename();
 
-		$this->file->copy($resourcePath . $resourceFilename, $whoopsPath . $resourceFilename);
+		copy($resourcePath . $resourceFilename, $whoopsPath . $resourceFilename);
 
 		$this->info('Whoops resources copied to vendor directory.');
 	}
@@ -55,6 +52,11 @@ class WhoopsCSSCopyCommand extends Command {
 	 */
 	protected function getResourcePath()
 	{
+		$path = $this->option('resourcePath');
+
+		if( ! empty($path))
+			return $this->option('resourcePath');
+
 		return __DIR__ . '/Resources/';
 	}
 
@@ -65,7 +67,12 @@ class WhoopsCSSCopyCommand extends Command {
 	 */
 	protected function getWhoopsPath()
 	{
-		return __DIR__ . '/../../vendor/filp/whoops/src/Whoops/Resources/css/';
+		$path = $this->option('whoopsPath');
+
+		if( ! empty($path))
+			return $this->option('whoopsPath');
+
+		return base_path('/vendor/filp/whoops/src/Whoops/Resources/css/');
 	}
 
 	/**
@@ -76,6 +83,19 @@ class WhoopsCSSCopyCommand extends Command {
 	protected function getResourceFilename()
 	{
 		return 'whoops.base.css';
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return [
+			['resourcePath', null, InputOption::VALUE_OPTIONAL, 'The resource path.', null],
+			['whoopsPath', null, InputOption::VALUE_OPTIONAL, 'The whoops path.', null]
+		];
 	}
 
 }
